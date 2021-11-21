@@ -40,7 +40,9 @@
 		document.getElementById("add-memo").innerHTML = treatment;
     if(treatment) {
       var rows = document.getElementsByTagName("tr");
-      rows.forEach(function(value, index, array) {value.style.backgroundColor = "#FEFBEA"});
+      for(var i = 0; i < rows.length; i += 1) {
+        rows[i].style.backgroundColor = "red";
+      }
     }
 		document.getElementById("add-memo").style.visibility = "";
 		});
