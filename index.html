@@ -1,83 +1,96 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Memo Minder</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
-    <script src="splitapikey.js"></script>
-    <script src="main.js"></script>
-<!--    <script src="//cdn.split.io/sdk/split-browser-0.1.0.full.min.js"></script> -->
-    <script src="https://cdn.split.io/sdk/split-10.15.9.min.js"></script>
-    <script src="https://cdn.split.io/rum-agent/rum-agent-0.2.1.min.js"></script>
-    <!-- Get anonymous ID -->
-    <script>
-	var anonymousId = getCookie('splitAnonymousId');
-	if (!anonymousId) {
-	    anonymousId = create_UUID();
-	    setCookie('splitAnonymousId', anonymousId, 365);
-	}
-    </script>   
-    <!-- Initialize Split SDK -->
-    <script>
-	var factory = splitio({
-		  core: {
-			authorizationKey: splitAPIKey,
-			key: anonymousId, // unique identifier for your anonymous
-			trafficType: 'anonymous'
-		  },
-		  scheduler: {
-			eventsPushRate: 1,
-			impressionsRefreshRate: 1
-		  },
-		  debug: false
-		});
-	var split_client = factory.client();
 
-	split_client.on(split_client.Event.SDK_READY, () => {
-		var treatment = split_client.getTreatment('memominder_add_btn_text');
-		document.getElementById("add-memo").innerHTML = treatment;
-    if(treatment) {
-      var rows = document.getElementsByTagName("th");
-      for(var i = 0; i < rows.length; i += 1) {
-        rows[i].style.backgroundColor = "#fefbea";
-      }
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Memo Minder</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+    integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+  <script src="splitapikey.js"></script>
+  <script src="main.js"></script>
+  <!--    <script src="//cdn.split.io/sdk/split-browser-0.1.0.full.min.js"></script> -->
+  <script src="https://cdn.split.io/sdk/split-10.15.9.min.js"></script>
+  <script src="https://cdn.split.io/rum-agent/rum-agent-0.2.1.min.js"></script>
+  <!-- Get anonymous ID -->
+  <script>
+    var anonymousId = getCookie('splitAnonymousId');
+    if (!anonymousId) {
+      anonymousId = create_UUID();
+      setCookie('splitAnonymousId', anonymousId, 365);
     }
-		document.getElementById("add-memo").style.visibility = "";
-		});
+  </script>
+  <!-- Initialize Split SDK -->
+  <script>
+    var factory = splitio({
+      core: {
+        authorizationKey: splitAPIKey,
+        key: anonymousId, // unique identifier for your anonymous
+        trafficType: 'anonymous'
+      },
+      scheduler: {
+        eventsPushRate: 1,
+        impressionsRefreshRate: 1
+      },
+      debug: false
+    });
+    var split_client = factory.client();
 
-	window.SPLIT_RUM.init(splitAPIKey)
-		.identities([{key: anonymousId, trafficType: 'anonymous'}]);
-    </script>
-  </head>
-  <body>
-    <div class="pure-g">
-      <div class="pure-u-3-24"></div>
-      <div class="pure-u-18-24">
+    split_client.on(split_client.Event.SDK_READY, () => {
+      var treatment = split_client.getTreatment('memominder_add_btn_text');
+      document.getElementById("add-memo").innerHTML = treatment;
+      if (treatment) {
+        var rows = document.getElementsByTagName("thead");
+        for (var i = 0; i < rows.length; i += 1) {
+          rows[i].style.backgroundColor = "#fefbea";
+        }
+      }
+      document.getElementById("add-memo").style.visibility = "";
+    });
+
+    window.SPLIT_RUM.init(splitAPIKey)
+      .identities([{ key: anonymousId, trafficType: 'anonymous' }]);
+  </script>
+</head>
+
+<body>
+  <div class="pure-g">
+    <div class="pure-u-3-24"></div>
+    <div class="pure-u-18-24">
       <h1>Memo Minder</h1>
-        <form class="pure-form pure-form-stacked" id="memo-input-form">
-	  <fieldset>
-		<legend><b>Add Reminder</b></legend>
-		<label for="memo-subject">Subject</label>
-                <input type="text" id="memo-subject" size="80" placeholder="Enter the memo subject ...">
-		<label for="memo-priority">Priority</label>
-                <select id="memo-priority">
-                  <option value="Low">Low</option>
-                  <option value="Medium">Medium</option>
-                  <option value="High">High</option>
-                </select>
-		<button type="submit" style="visibility:hidden" id="add-memo" class="pure-button pure-button-primary">Add</button>
-	  </fieldset>
-	<hr>
-        </form>
-        <div id="memosList">
-		<table class="pure-table pure-table-horizontal">
-                        <thead><tr><th>Subject</th><th>Priority</th><th>Status</th><th></th><th></th></tr></thead>
-		<p></p>
-		</table>
-        </div>
-     </div>
+      <form class="pure-form pure-form-stacked" id="memo-input-form">
+        <fieldset>
+          <legend><b>Add Reminder</b></legend>
+          <label for="memo-subject">Subject</label>
+          <input type="text" id="memo-subject" size="80" placeholder="Enter the memo subject ...">
+          <label for="memo-priority">Priority</label>
+          <select id="memo-priority">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+          <button type="submit" style="visibility:hidden" id="add-memo"
+            class="pure-button pure-button-primary">Add</button>
+        </fieldset>
+        <hr>
+      </form>
+      <div id="memosList">
+        <table class="pure-table pure-table-horizontal">
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Priority</th>
+              <th>Status</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <p></p>
+        </table>
+      </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>
