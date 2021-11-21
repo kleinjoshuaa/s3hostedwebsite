@@ -39,9 +39,9 @@
 		var treatment = split_client.getTreatment('memominder_add_btn_text');
 		document.getElementById("add-memo").innerHTML = treatment;
     if(treatment) {
-      var rows = document.getElementsByTagName("thead");
+      var rows = document.getElementsByTagName("th");
       for(var i = 0; i < rows.length; i += 1) {
-        rows[i].style.backgroundColor = "fefbea";
+        rows[i].style.backgroundColor = "#fefbea";
       }
     }
 		document.getElementById("add-memo").style.visibility = "";
