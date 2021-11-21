@@ -34,11 +34,13 @@
 		  debug: false
 		});
 	var split_client = factory.client();
-console.log('test');
+
 	split_client.on(split_client.Event.SDK_READY, () => {
 		var treatment = split_client.getTreatment('memominder_add_btn_text');
-		console.log("treatment: " + treatment);
 		document.getElementById("add-memo").innerHTML = treatment;
+    if(treatment) {
+      document.getElementsByName("thead").style = "background-color: #FEFBEA"
+    }
 		document.getElementById("add-memo").style.visibility = "";
 		});
 
