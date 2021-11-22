@@ -41,10 +41,8 @@
       var treatment = split_client.getTreatment('memominder_add_btn_text');
       document.getElementById("add-memo").innerHTML = treatment;
       if (treatment === "on") {
-        var rows = document.getElementsByTagName("thead");
-        for (var i = 0; i < rows.length; i += 1) {
-          rows[i].style.backgroundColor = "#fefbea";
-        }
+        var sheet = document.styleSheets[0];
+         sheet.insertRule("thead {background-color: #FEFBEA}",0);
       }
       document.getElementById("add-memo").style.visibility = "";
     });
