@@ -132,14 +132,4 @@ memoTable += '<tr>' +
 }
 memoTable += '</table>';
 memosList.innerHTML = memoTable;
-split_client.on(split_client.Event.SDK_READY, () => {
-
-    var treatment = split_client.getTreatment('memominder_add_btn_text');
-    if (treatment === "on") {
-      var rows = document.getElementsByTagName("thead");
-      for (var i = 0; i < rows.length; i += 1) {
-        rows[i].style.backgroundColor = "#fefbea";
-      }
-    }
-  });
 }
