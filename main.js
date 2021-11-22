@@ -113,6 +113,8 @@ var memosList = document.getElementById('memosList');
 var memoTable = '<table class="pure-table pure-table-horizontal">' +
 '<thead><tr><th>Subject</th><th>Priority</th><th>Status</th><th></th><th></th></tr></thead>';
 
+
+
 for (var i = 0; i < memos.length; i++) {
 var id = memos[i].id;
 var subject = memos[i].subject;
@@ -130,4 +132,14 @@ memoTable += '<tr>' +
 }
 memoTable += '</table>';
 memosList.innerHTML = memoTable;
+split_client.on(split_client.Event.SDK_READY, () => {
+
+    var treatment = split_client.getTreatment('memominder_add_btn_text');
+    if (treatment === "on") {
+      var rows = document.getElementsByTagName("thead");
+      for (var i = 0; i < rows.length; i += 1) {
+        rows[i].style.backgroundColor = "#fefbea";
+      }
+    }
+  });
 }
